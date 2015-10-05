@@ -50,45 +50,7 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
         // TextView for displaying result
         mDisplayField= (TextView) findViewById(R.id.displayTextView);
 
-        // Set Numeric Listeners
-        Button button0= (Button) findViewById(R.id.button_0);
-        button0.setOnClickListener(this);
-        Button button1 = (Button) findViewById(R.id.button_1);
-        button1.setOnClickListener(this);
-        Button button2 = (Button) findViewById(R.id.button_2);
-        button2.setOnClickListener(this);
-        Button button3 = (Button) findViewById(R.id.button_3);
-        button3.setOnClickListener(this);
-        Button button4 = (Button) findViewById(R.id.button_4);
-        button4.setOnClickListener(this);
-        Button button5 = (Button) findViewById(R.id.button_5);
-        button5.setOnClickListener(this);
-        Button button6 = (Button) findViewById(R.id.button_6);
-        button6.setOnClickListener(this);
-        Button button7 = (Button) findViewById(R.id.button_7);
-        button7.setOnClickListener(this);
-        Button button8 = (Button) findViewById(R.id.button_8);
-        button8.setOnClickListener(this);
-        Button button9 = (Button) findViewById(R.id.button_9);
-        button9.setOnClickListener(this);
-        Button pointButton = (Button) findViewById(R.id.button_point);
-        pointButton.setOnClickListener(this);
-
-        // Set Operators Listeners for 'All clear/Plus/Minus/Multiply/Divide/Calculate'
-        Button backButton = (Button) findViewById(R.id.button_back);
-        backButton.setOnClickListener(this);
-        Button acButton = (Button) findViewById(R.id.button_ac);
-        acButton.setOnClickListener(this);
-        Button plusButton1 = (Button) findViewById(R.id.button_plus);
-        plusButton1.setOnClickListener(this);
-        Button minusButton1 = (Button) findViewById(R.id.button_minus);
-        minusButton1.setOnClickListener(this);
-        Button mulButton = (Button) findViewById(R.id.button_mul);
-        mulButton.setOnClickListener(this);
-        Button divButton = (Button) findViewById(R.id.button_div);
-        divButton.setOnClickListener(this);
-        Button calcButton = (Button) findViewById(R.id.button_calc);
-        calcButton.setOnClickListener(this);
+        SetListener();
 
     }
     @Override
@@ -177,7 +139,7 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
         if (mStartNumber) { // Error: needed number, not operator
             // In this state we're expecting a number, but got an operator.
             AllClear();
-            mDisplayField.setText("ERROR - No operator");
+            mDisplayField.setText("Error- No operator");
         } else {
             // We're expecting an operator.
             mStartNumber = true;  // Next thing must be a number
@@ -186,16 +148,22 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
                 // If this is the first op, mPreviousOp will be =.
                 String displayText = mDisplayField.getText().toString();
 
-                if (mPreviousOp.equals("=")) {
-                    mLogic.setTotal(displayText);
-                } else if (mPreviousOp.equals("+")) {
-                    mLogic.add(displayText);
-                } else if (mPreviousOp.equals("-")) {
-                    mLogic.subtract(displayText);
-                } else if (mPreviousOp.equals("*")) {
-                    mLogic.multiply(displayText);
-                } else if (mPreviousOp.equals("/")) {
-                    mLogic.divide(displayText);
+                switch (mPreviousOp) {
+                    case "=":
+                        mLogic.setTotal(displayText);
+                        break;
+                    case "+":
+                        mLogic.add(displayText);
+                        break;
+                    case "-":
+                        mLogic.subtract(displayText);
+                        break;
+                    case "*":
+                        mLogic.multiply(displayText);
+                        break;
+                    case "/":
+                        mLogic.divide(displayText);
+                        break;
                 }
 
                 mDisplayField.setText("" + mLogic.getTotalString());
@@ -218,6 +186,8 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
 
         if(str.length()> 0) {
             mDisplayField.setText(str.substring(0, str.length()- 1));
+            mStartNumber= true;
+            mPreviousOp  = "=";
         }
     }
 
@@ -232,6 +202,51 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
         mLogic.setTotal("0");
     }
 
+    /**
+     * Set listeners for numeric and operator
+     *
+     */
+    private void SetListener() {
+        // Set Numeric Listeners
+        Button button0= (Button) findViewById(R.id.button_0);
+        button0.setOnClickListener(this);
+        Button button1 = (Button) findViewById(R.id.button_1);
+        button1.setOnClickListener(this);
+        Button button2 = (Button) findViewById(R.id.button_2);
+        button2.setOnClickListener(this);
+        Button button3 = (Button) findViewById(R.id.button_3);
+        button3.setOnClickListener(this);
+        Button button4 = (Button) findViewById(R.id.button_4);
+        button4.setOnClickListener(this);
+        Button button5 = (Button) findViewById(R.id.button_5);
+        button5.setOnClickListener(this);
+        Button button6 = (Button) findViewById(R.id.button_6);
+        button6.setOnClickListener(this);
+        Button button7 = (Button) findViewById(R.id.button_7);
+        button7.setOnClickListener(this);
+        Button button8 = (Button) findViewById(R.id.button_8);
+        button8.setOnClickListener(this);
+        Button button9 = (Button) findViewById(R.id.button_9);
+        button9.setOnClickListener(this);
+        Button pointButton = (Button) findViewById(R.id.button_point);
+        pointButton.setOnClickListener(this);
+
+        // Set Operators Listeners for 'All clear/Plus/Minus/Multiply/Divide/Calculate'
+        Button backButton = (Button) findViewById(R.id.button_back);
+        backButton.setOnClickListener(this);
+        Button acButton = (Button) findViewById(R.id.button_ac);
+        acButton.setOnClickListener(this);
+        Button plusButton1 = (Button) findViewById(R.id.button_plus);
+        plusButton1.setOnClickListener(this);
+        Button minusButton1 = (Button) findViewById(R.id.button_minus);
+        minusButton1.setOnClickListener(this);
+        Button mulButton = (Button) findViewById(R.id.button_mul);
+        mulButton.setOnClickListener(this);
+        Button divButton = (Button) findViewById(R.id.button_div);
+        divButton.setOnClickListener(this);
+        Button calcButton = (Button) findViewById(R.id.button_calc);
+        calcButton.setOnClickListener(this);
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
