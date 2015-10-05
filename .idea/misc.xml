@@ -2,15 +2,8 @@
 <project version="4">
   <component name="EclipseCodeFormatter">
     <option name="defaultSettings" value="true" />
-    <option name="disabledFileTypes" value="html" />
-    <option name="formatter" value="ECLIPSE" />
-    <option name="id" value="1440118563774" />
-    <option name="importOrderConfigFilePath" value="$USER_HOME$/Downloads/android/android.importorder" />
-    <option name="importOrderFromFile" value="true" />
+    <option name="id" value="1441659847546" />
     <option name="name" value="default" />
-    <option name="pathToConfigFileJava" value="$USER_HOME$/Downloads/android/android_formatter.xml" />
-    <option name="selectedJavaProfile" value="Android" />
-    <option name="useOldEclipseJavaFormatter" value="true" />
   </component>
   <component name="EntryPointsManager">
     <entry_points version="2.0" />

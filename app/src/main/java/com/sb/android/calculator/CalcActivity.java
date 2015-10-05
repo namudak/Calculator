@@ -10,8 +10,23 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.TextView;
 
-public class CalcActivity extends AppCompatActivity {
+import com.sb.android.calculator.utility.CalcLogic;
+
+/**
+ * @Author Namudak Oct.6, 2015
+ * Simple calculator for signed digit.
+ */
+public class CalcActivity extends AppCompatActivity implements View.OnClickListener{
+    
+    // Component referenced during execution
+    private TextView mDisplayField;             // display result / input.
+
+    // Variables representing state of the calculator
+    private boolean   mStartNumber = true;      // true: num key next
+    private String    mPreviousOp  = "=";       // previous operation
+    private CalcLogic mLogic = new CalcLogic(); // The internal calculator.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,143 +46,190 @@ public class CalcActivity extends AppCompatActivity {
             }
         });
 
-        Button mButton0 = (Button) findViewById(R.id.button_0);
-        Button mButton1 = (Button) findViewById(R.id.button_2);
-        Button mButton2 = (Button) findViewById(R.id.button_3);
-        Button mButton3 = (Button) findViewById(R.id.button_4);
-        Button mButton4 = (Button) findViewById(R.id.button_5);
-        Button mButton5 = (Button) findViewById(R.id.button_6);
-        Button mButton6 = (Button) findViewById(R.id.button_7);
-        Button mButton7 = (Button) findViewById(R.id.button_8);
-        Button mButton8 = (Button) findViewById(R.id.button_9);
-        Button mButton9 = (Button) findViewById(R.id.button_0);
 
-        Button mAcButton = (Button) findViewById(R.id.button_ac);
-        Button mPlusButton1 = (Button) findViewById(R.id.button_plus);
-        Button mMinusButton1 = (Button) findViewById(R.id.button_minus);
-        Button mMulButton = (Button) findViewById(R.id.button_mul);
-        Button mDivButton = (Button) findViewById(R.id.button_div);
-        Button mPointButton = (Button) findViewById(R.id.button_point);
-        Button mCalcButton = (Button) findViewById(R.id.button_calc);
+        // TextView for displaying result
+        mDisplayField= (TextView) findViewById(R.id.displayTextView);
 
-        mButton0.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        // Set Numeric Listeners
+        Button button0= (Button) findViewById(R.id.button_0);
+        button0.setOnClickListener(this);
+        Button button1 = (Button) findViewById(R.id.button_1);
+        button1.setOnClickListener(this);
+        Button button2 = (Button) findViewById(R.id.button_2);
+        button2.setOnClickListener(this);
+        Button button3 = (Button) findViewById(R.id.button_3);
+        button3.setOnClickListener(this);
+        Button button4 = (Button) findViewById(R.id.button_4);
+        button4.setOnClickListener(this);
+        Button button5 = (Button) findViewById(R.id.button_5);
+        button5.setOnClickListener(this);
+        Button button6 = (Button) findViewById(R.id.button_6);
+        button6.setOnClickListener(this);
+        Button button7 = (Button) findViewById(R.id.button_7);
+        button7.setOnClickListener(this);
+        Button button8 = (Button) findViewById(R.id.button_8);
+        button8.setOnClickListener(this);
+        Button button9 = (Button) findViewById(R.id.button_9);
+        button9.setOnClickListener(this);
+        Button pointButton = (Button) findViewById(R.id.button_point);
+        pointButton.setOnClickListener(this);
 
+        // Set Operators Listeners for 'All clear/Plus/Minus/Multiply/Divide/Calculate'
+        Button backButton = (Button) findViewById(R.id.button_back);
+        backButton.setOnClickListener(this);
+        Button acButton = (Button) findViewById(R.id.button_ac);
+        acButton.setOnClickListener(this);
+        Button plusButton1 = (Button) findViewById(R.id.button_plus);
+        plusButton1.setOnClickListener(this);
+        Button minusButton1 = (Button) findViewById(R.id.button_minus);
+        minusButton1.setOnClickListener(this);
+        Button mulButton = (Button) findViewById(R.id.button_mul);
+        mulButton.setOnClickListener(this);
+        Button divButton = (Button) findViewById(R.id.button_div);
+        divButton.setOnClickListener(this);
+        Button calcButton = (Button) findViewById(R.id.button_calc);
+        calcButton.setOnClickListener(this);
+
+    }
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.button_0:
+                NumericInput("0");
+                break;
+            case R.id.button_1:
+                NumericInput("1");
+                break;
+            case R.id.button_2:
+                NumericInput("2");
+                break;
+            case R.id.button_3:
+                NumericInput("3");
+                break;
+            case R.id.button_4:
+                NumericInput("4");
+                break;
+            case R.id.button_5:
+                NumericInput("5");
+                break;
+            case R.id.button_6:
+                NumericInput("6");
+                break;
+            case R.id.button_7:
+                NumericInput("7");
+                break;
+            case R.id.button_8:
+                NumericInput("8");
+                break;
+            case R.id.button_9:
+                NumericInput("9");
+                break;
+            case R.id.button_point:
+                NumericInput(".");
+                break;
+            case R.id.button_back:
+                BackClear();
+                break;
+            case R.id.button_ac:
+                AllClear();
+                break;
+            case R.id.button_plus:
+                OperatorInput("+");
+                break;
+            case R.id.button_minus:
+                OperatorInput("-");
+                break;
+            case R.id.button_mul:
+                OperatorInput("*");
+                break;
+            case R.id.button_div:
+                OperatorInput("/");
+                break;
+            case R.id.button_calc:
+                OperatorInput("=");
+                break;
+
+        }
+    }
+
+    /**
+     * When pressed numeric or '.'
+     */
+    private void NumericInput(String digit) {
+
+        if (mStartNumber) {
+            // This is the first digit, clear field and set
+            mDisplayField.setText(digit);
+            mStartNumber = false;
+        } else {
+            // Add this digit to the end of the display field
+            mDisplayField.setText(mDisplayField.getText() + digit);
+        }
+    }
+
+    /**
+     * When pressed operators as '+' '-' '*' '/' '='
+     */
+    private void OperatorInput(String op) {
+        // The calculator is always in one of two states.
+        // 1. A number must be entered -- an operator is wrong.
+        // 2. An operator must be entered.
+        if (mStartNumber) { // Error: needed number, not operator
+            // In this state we're expecting a number, but got an operator.
+            AllClear();
+            mDisplayField.setText("ERROR - No operator");
+        } else {
+            // We're expecting an operator.
+            mStartNumber = true;  // Next thing must be a number
+            try {
+                // Get value from display field, convert, do prev op
+                // If this is the first op, mPreviousOp will be =.
+                String displayText = mDisplayField.getText().toString();
+
+                if (mPreviousOp.equals("=")) {
+                    mLogic.setTotal(displayText);
+                } else if (mPreviousOp.equals("+")) {
+                    mLogic.add(displayText);
+                } else if (mPreviousOp.equals("-")) {
+                    mLogic.subtract(displayText);
+                } else if (mPreviousOp.equals("*")) {
+                    mLogic.multiply(displayText);
+                } else if (mPreviousOp.equals("/")) {
+                    mLogic.divide(displayText);
+                }
+
+                mDisplayField.setText("" + mLogic.getTotalString());
+
+            } catch (NumberFormatException ex) {
+                AllClear();
+                mDisplayField.setText("Error");
             }
-        });
 
-        mButton1.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            // set mPreviousOp for the next operator.
+            mPreviousOp = op;
+        }
 
-            }
-        });
+    }
+    /**
+     * When pressed backbutton
+     */
+    private void BackClear() {
+        String str= mDisplayField.getText().toString();
 
-        mButton2.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        if(str.length()> 0) {
+            mDisplayField.setText(str.substring(0, str.length()- 1));
+        }
+    }
 
-            }
-        });
-
-        mButton3.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        mButton4.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        mButton5.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        mButton6.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        mButton7.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        mButton8.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        mButton9.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        mAcButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        mMulButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        mDivButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        mPlusButton1.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        mMinusButton1.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        mPointButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        mCalcButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                
-            }
-        });
+    /**
+     * When pressed 'AC' operator
+     */
+    private void AllClear() {
+        // Expecting number, not op.
+        mStartNumber = true;
+        mDisplayField.setText("0");
+        mPreviousOp  = "=";
+        mLogic.setTotal("0");
     }
 
     @Override
