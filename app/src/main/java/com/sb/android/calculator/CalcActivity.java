@@ -167,8 +167,11 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
                         mLogic.divide(displayText);
                         break;
                 }
-
-                mDisplayField.setText("" + mLogic.getTotalString());
+                // Omit '0.' when entering operators
+                if(!displayText.contains(".")) {
+                    displayText= mLogic.getTotalString().replace(".0", "");
+                }
+                mDisplayField.setText("" + displayText);
 
             } catch (NumberFormatException ex) {
                 AllClear();
