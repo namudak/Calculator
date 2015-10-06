@@ -21,12 +21,12 @@ import com.sb.android.calculator.utility.CalcLogic;
 public class CalcActivity extends AppCompatActivity implements View.OnClickListener{
     
     // Component referenced during execution
-    private TextView mDisplayField;             // display result / input.
+    private TextView mDisplayField;                     // display result / input.
 
     // Variables representing state of the calculator
-    private boolean   mStartNumber = true;      // true: num key next
-    private String    mPreviousOp  = "=";       // previous operation
-    private CalcLogic mLogic = new CalcLogic(); // The internal calculator.
+    private boolean   mStartNumber = true;              // true: num key next
+    private String    mPreviousOp  = "=";               // previous operation
+    private final CalcLogic mLogic = new CalcLogic();   // The internal calculator.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
