@@ -52,6 +52,8 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
 
         SetListener();
 
+        AllClear();
+
     }
     @Override
     public void onClick(View v) {
@@ -186,7 +188,7 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
 
         if(str.length()> 0) {
             mDisplayField.setText(str.substring(0, str.length()- 1));
-            mStartNumber= true;
+            mStartNumber= false;
             mPreviousOp  = "=";
         }
     }

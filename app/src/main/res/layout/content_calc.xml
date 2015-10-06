@@ -20,14 +20,14 @@
         android:id="@+id/displayTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="3dp"
-        android:layout_marginRight="3dp"
-        android:background="#CCFF90"
         android:gravity="end"
         android:paddingLeft="3dp"
         android:paddingRight="3dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="3dp"
+        android:layout_marginRight="3dp"
+        android:layout_gravity="center_horizontal"
+        android:background="#CCFF90"
         android:singleLine="true"
         android:textSize="32sp" />
 
@@ -84,7 +84,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:background="@drawable/buttonshape"
+            android:background="@drawable/buttonshape2"
             android:shadowColor="#A8A8A8"
             android:shadowDx="0"
             android:shadowDy="0"
@@ -288,7 +288,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/buttonshape"
+            android:background="@drawable/buttonshape2"
             android:shadowColor="#A8A8A8"
             android:shadowDx="0"
             android:shadowDy="0"
@@ -310,5 +310,10 @@
             android:textColor="#FFFFFF"
             android:textSize="24sp" />
     </LinearLayout>
+
+    <TextSwitcher
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textSwitcher" />
 
 </LinearLayout>

@@ -7,35 +7,35 @@ public class CalcLogic {
 
     //-- Instance variables.
     // The current total is all we need to remember.
-    private Float _currentTotal;
+    private Float mCurrentTotal;
 
     /** Constructor */
     public CalcLogic() {
-        _currentTotal = 0.0f;
+        mCurrentTotal = 0.0f;
     }
 
     public String getTotalString() {
-        return "" + _currentTotal;
+        return "" + mCurrentTotal;
     }
 
     public void setTotal(String n) {
-        _currentTotal = convertToNumber(n);
+        mCurrentTotal = convertToNumber(n);
     }
 
     public void add(String n) {
-        _currentTotal += convertToNumber(n);
+        mCurrentTotal += convertToNumber(n);
     }
 
     public void subtract(String n) {
-        _currentTotal -= convertToNumber(n);
+        mCurrentTotal -= convertToNumber(n);
     }
 
     public void multiply(String n) {
-        _currentTotal *= convertToNumber(n);
+        mCurrentTotal *= convertToNumber(n);
     }
 
     public void divide(String n) {
-        _currentTotal /= convertToNumber(n);
+        mCurrentTotal /= convertToNumber(n);
     }
 
     private Float convertToNumber(String n) {
