@@ -24,10 +24,8 @@
         android:paddingLeft="3dp"
         android:paddingRight="3dp"
         android:layout_marginBottom="10dp"
-        android:layout_marginLeft="3dp"
-        android:layout_marginRight="3dp"
         android:layout_gravity="center_horizontal"
-        android:background="#CCFF90"
+        android:background="@drawable/textview_border"
         android:singleLine="true"
         android:textSize="32sp" />
 
