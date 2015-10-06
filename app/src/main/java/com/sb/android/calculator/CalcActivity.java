@@ -197,9 +197,9 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
     private void AllClear() {
         // Expecting number, not op.
         mStartNumber = true;
-        mDisplayField.setText("0");
+        mDisplayField.setText("0.0");
         mPreviousOp  = "=";
-        mLogic.setTotal("0");
+        mLogic.setTotal("0.0");
     }
 
     /**
